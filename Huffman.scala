@@ -18,12 +18,11 @@ object Huffman {
     if(charMap.size==1){return charMap}
     implicit val order = Ordering.Double.TotalOrdering
     val minKey = charMap.minBy(_._2)._1
-    val testMap = charMap.view.filterKeys(_ != minKey).toMap
-    // println(testMap)
-    val secondMinKey = testMap.minBy(_._2)._1
-    val testMap2 = testMap.view.filterKeys(_ != secondMinKey).toMap
-    val newKoho = testMap2 + ((minKey+secondMinKey) -> (charMap (minKey) + charMap (secondMinKey)))
-    getTree(newKoho)
+    val delMinMap = charMap.view.filterKeys(_ != minKey).toMap
+    val secondMinKey = delMinMap.minBy(_._2)._1
+    val del2MinMap = delMinMap.view.filterKeys(_ != secondMinKey).toMap
+    val newCharMap = del2MinMap + ((minKey+secondMinKey) -> (charMap (minKey) + charMap (secondMinKey)))
+    getTree(newCharMap)
   }
 
   def appearanceRate(caracter:Char, source: String): Double = {
